@@ -1,4 +1,12 @@
 /**
+ * Tailwind CSS imports
+ * View the full documentation at https://tailwindcss.com
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
  * WHAT IS THIS FILE?
  *
  * Globally applied styles. No matter which components are in the page or matching route,
@@ -54,3 +62,16 @@ body {
   padding: 0;
   line-height: inherit;
 }
+
+.btn{
+  @apply px-4 py-2 font-bold rounded-xl min-h-[2.5rem] min-w-[7rem];
+}
+
+.btn-primary {
+  @apply text-white transition-colors duration-500 ease-in-out bg-purple-600 hover:bg-purple-900;
+}
+
+.btn:disabled{
+  @apply text-gray-200 bg-gray-400;
+}
+
