@@ -34,10 +34,10 @@ export default component$(() => {
       />
       <div class="flex justify-center items-center gap-3">
         <button onClick$={toggleBack} class="btn btn-primary">
-          Flip
+          {showBack.value ? "Front" : "Back"}
         </button>
         <button onClick$={toggleVisible} class="btn btn-primary">
-          Show
+          {isVisible.value ? "Hide" : "Show"}
         </button>
       </div>
     </>

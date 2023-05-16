@@ -42,10 +42,10 @@ export default component$(() => {
           Next
         </button>
         <button onClick$={toggleBack} class="btn btn-primary">
-          Flip
+          {showBack.value ? "Front" : "Back"}
         </button>
         <button onClick$={toggleVisible} class="btn btn-primary">
-          Show
+          {isVisible.value ? "Hide" : "Show"}
         </button>
       </div>
     </div>
