@@ -1,33 +1,36 @@
-import { $, component$, useSignal } from "@builder.io/qwik";
+import { $, component$, useContext, useSignal } from "@builder.io/qwik";
 import { DocumentHead, Link, useNavigate } from "@builder.io/qwik-city";
 import { PokemonImage } from "~/components/pokemons/pokemon-image";
+import { PokemonGameContext } from "~/context";
 
 export default component$(() => {
-  const pokemonId = useSignal<number>(1);
-  const showBackImage = useSignal<boolean>(false);
-  const showPokemon = useSignal<boolean>(false);
+  // const pokemonId = useSignal<number>(1);
+  // const showBack = useSignal<boolean>(false);
+  // const showPokemon = useSignal<boolean>(false);
+  const pokemonGame = useContext(PokemonGameContext);
+
   const navigate = useNavigate();
 
   const changePokemon = $((value: number) => {
     console.log("changePogkemon", value);
-    if (pokemonId.value + value < 1) return;
-    pokemonId.value += value;
+    if (pokemonGame.pokemonId + value < 1) return;
+    pokemonGame.pokemonId += value;
   });
 
   const goToPokemon = $(async () => {
-    await navigate(`/pokemon/${pokemonId.value}`);
+    await navigate(`/pokemon/${pokemonGame.pokemonId}`);
   });
 
   return (
     <div class="flex flex-col justify-center items-center">
       <span class="text-4xl">Who's that pokemon?</span>
-      <span class="text-9xl">{pokemonId.value}</span>
-      {/* <Link href={`/pokemon/${pokemonId.value}/`}> */}
+      <span class="text-9xl">{pokemonGame.pokemonId}</span>
+      {/* <Link href={`/pokemon/${pokemonId}/`}> */}
       <div onClick$={() => goToPokemon()}>
         <PokemonImage
-          pokemonId={pokemonId.value}
-          isVisible={showPokemon.value}
-          backImage={showBackImage.value}
+          pokemonId={pokemonGame.pokemonId}
+          isVisible={pokemonGame.isVisible}
+          backImage={pokemonGame.showBack}
         />
       </div>
       {/* </Link> */}
@@ -39,13 +42,13 @@ export default component$(() => {
           Next
         </button>
         <button
-          onClick$={() => (showBackImage.value = !showBackImage.value)}
+          onClick$={() => (pokemonGame.showBack = !pokemonGame.showBack)}
           class="btn btn-primary"
         >
           Flip
         </button>
         <button
-          onClick$={() => (showPokemon.value = !showPokemon.value)}
+          onClick$={() => (pokemonGame.isVisible = !pokemonGame.isVisible)}
           class="btn btn-primary"
         >
           Show

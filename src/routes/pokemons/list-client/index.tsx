@@ -1,43 +1,26 @@
 import {
   $,
   component$,
-  useOn,
+  useContext,
   useOnDocument,
-  useSignal,
-  useStore,
   useTask$,
-  useVisibleTask$,
 } from "@builder.io/qwik";
 import { DocumentHead } from "@builder.io/qwik-city";
 import { PokemonImage } from "~/components/pokemons/pokemon-image";
+import { PokemonListContext } from "~/context";
 import { getSmallPokemons } from "~/helpers/get-pokemons";
 import { SmallPokemon } from "~/interfaces";
 
-interface PokemonPageState {
-  currentPage: number;
-  pokemons: SmallPokemon[];
-  isLoading: boolean;
-}
 
 export default component$(() => {
-  const pokemonState = useStore<PokemonPageState>({
-    currentPage: 0,
-    pokemons: [],
-    isLoading: false,
-  });
 
-  // useVisibleTask$(async ({ track }) => {
-  //   track(() => pokemonState.currentPage);
-  //   console.log("visible");
-  //   const pokemons = await getSmallPokemons(pokemonState.currentPage * 10);
+  const pokemonState = useContext(PokemonListContext);
 
-  //   pokemonState.pokemons = [...pokemonState.pokemons, ...pokemons];
-  // });
+
 
   useTask$(async ({ track }) => {
     track(() => pokemonState.currentPage);
     console.log("task");
-    // pokemonState.isLoading = true;
     const pokemons = await getSmallPokemons(pokemonState.currentPage * 30, 30);
 
     pokemonState.pokemons = [...pokemonState.pokemons, ...pokemons];
@@ -65,12 +48,6 @@ export default component$(() => {
         <span class="text-xl">Is loading page: {}</span>
       </div>
       <div class="flex gap-3 justify-end container mx-auto items-center">
-        {/* <button
-          class="btn btn-primary"
-          onClick$={() => pokemonState.currentPage--}
-        >
-          Previous
-        </button> */}
         <button
           class="btn btn-primary"
           onClick$={() => pokemonState.currentPage++}
