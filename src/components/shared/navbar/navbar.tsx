@@ -3,6 +3,21 @@ import { QwikLogo } from "../../icons/qwik";
 import styles from "./navbar.module.css";
 import { Link } from "@builder.io/qwik-city";
 
+const routes = [
+  {
+    name: "SSR-List",
+    path: "/pokemons/list-ssr/",
+  },
+  {
+    name: "Client-List",
+    path: "/pokemons/list-client",
+  },
+  {
+    name: "Counter",
+    path: "/counter",
+  },
+];
+
 export default component$(() => {
   return (
     <header class={styles.header}>
@@ -13,12 +28,11 @@ export default component$(() => {
           </Link>
         </div>
         <ul>
-          <li>
-            <Link href="/pokemons/list-ssr/">SSR-List</Link>
-          </li>
-          <li>
-            <Link href="/pokemons/list-client">Client-List</Link>
-          </li>
+          {routes.map((route) => (
+            <li key={route.path}>
+              <Link href={route.path}>{route.name}</Link>
+            </li>
+          ))}
         </ul>
       </div>
     </header>

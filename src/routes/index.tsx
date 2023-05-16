@@ -2,55 +2,49 @@ import { $, component$, useContext, useSignal } from "@builder.io/qwik";
 import { DocumentHead, Link, useNavigate } from "@builder.io/qwik-city";
 import { PokemonImage } from "~/components/pokemons/pokemon-image";
 import { PokemonGameContext } from "~/context";
+import { usePokemonGame } from "~/hooks/usePokemonGame";
 
 export default component$(() => {
-  // const pokemonId = useSignal<number>(1);
-  // const showBack = useSignal<boolean>(false);
-  // const showPokemon = useSignal<boolean>(false);
-  const pokemonGame = useContext(PokemonGameContext);
-
   const navigate = useNavigate();
 
-  const changePokemon = $((value: number) => {
-    console.log("changePogkemon", value);
-    if (pokemonGame.pokemonId + value < 1) return;
-    pokemonGame.pokemonId += value;
-  });
+  const {
+    pokemonId,
+    isVisible,
+    showBack,
+    toggleBack,
+    toggleVisible,
+    nextPokemon,
+    previousPokemon,
+  } = usePokemonGame();
 
   const goToPokemon = $(async () => {
-    await navigate(`/pokemon/${pokemonGame.pokemonId}`);
+    await navigate(`/pokemon/${pokemonId.value}`);
   });
 
   return (
     <div class="flex flex-col justify-center items-center">
       <span class="text-4xl">Who's that pokemon?</span>
-      <span class="text-9xl">{pokemonGame.pokemonId}</span>
+      <span class="text-9xl">{pokemonId.value}</span>
       {/* <Link href={`/pokemon/${pokemonId}/`}> */}
       <div onClick$={() => goToPokemon()}>
         <PokemonImage
-          pokemonId={pokemonGame.pokemonId}
-          isVisible={pokemonGame.isVisible}
-          backImage={pokemonGame.showBack}
+          pokemonId={pokemonId.value}
+          isVisible={isVisible.value}
+          backImage={showBack.value}
         />
       </div>
       {/* </Link> */}
       <div class="flex gap-3">
-        <button onClick$={() => changePokemon(-1)} class="btn btn-primary">
+        <button onClick$={previousPokemon} class="btn btn-primary">
           Previous
         </button>
-        <button onClick$={() => changePokemon(1)} class="btn btn-primary">
+        <button onClick$={nextPokemon} class="btn btn-primary">
           Next
         </button>
-        <button
-          onClick$={() => (pokemonGame.showBack = !pokemonGame.showBack)}
-          class="btn btn-primary"
-        >
+        <button onClick$={toggleBack} class="btn btn-primary">
           Flip
         </button>
-        <button
-          onClick$={() => (pokemonGame.isVisible = !pokemonGame.isVisible)}
-          class="btn btn-primary"
-        >
+        <button onClick$={toggleVisible} class="btn btn-primary">
           Show
         </button>
       </div>
