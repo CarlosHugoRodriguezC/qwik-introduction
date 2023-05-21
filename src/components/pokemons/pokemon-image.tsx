@@ -26,6 +26,7 @@ export const PokemonImage = component$((props: Props) => {
   });
 
   const imageUrl = useComputed$(async () => {
+    if (pokemonId === "") return "";
     if (backImage) return `${baseUrl}back/${pokemonId}.png`;
     return `${baseUrl}${pokemonId}.png`;
   });
@@ -45,6 +46,7 @@ export const PokemonImage = component$((props: Props) => {
         src={imageUrl.value}
         style={{ height: `${size}px` }}
         onLoad$={() => (imageLoaded.value = true)}
+        onLoadedData$={() => (imageLoaded.value = true)}
       />
     </div>
   );
