@@ -42,13 +42,19 @@ export const PokemonImage = component$((props: Props) => {
             true,
           "transform -scale-x-100": backImage,
         }}
-        width="auto"
+        width="100%"
         height="auto"
         // src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemonId}.svg`}
         src={imageUrl.value}
         style={{ height: `${size}px` }}
-        onLoad$={() => (imageLoaded.value = true)}
-        onLoadedData$={() => (imageLoaded.value = true)}
+        onLoad$={(event) => {
+          console.log("onLoad", event);
+          imageLoaded.value = true;
+        }}
+        // onLoadedData$={() => {
+        //   console.log("onLoadedData");
+        //   imageLoaded.value = true;
+        // }}
       />
     </div>
   );

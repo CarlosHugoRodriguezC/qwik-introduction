@@ -5,6 +5,10 @@ import { Link } from "@builder.io/qwik-city";
 
 const routes = [
   {
+    name: "Dashboard",
+    path: "/dashboard",
+  },
+  {
     name: "SSR-List",
     path: "/pokemons/list-ssr/",
   },
@@ -15,6 +19,10 @@ const routes = [
   {
     name: "Counter",
     path: "/counter",
+  },
+  {
+    name: "Sign In",
+    path: "/login",
   },
 ];
 

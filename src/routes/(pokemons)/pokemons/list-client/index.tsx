@@ -5,18 +5,13 @@ import {
   useOnDocument,
   useTask$,
 } from "@builder.io/qwik";
-import { DocumentHead } from "@builder.io/qwik-city";
+import { type DocumentHead } from "@builder.io/qwik-city";
 import { PokemonImage } from "~/components/pokemons/pokemon-image";
 import { PokemonListContext } from "~/context";
 import { getSmallPokemons } from "~/helpers/get-pokemons";
-import { SmallPokemon } from "~/interfaces";
-
 
 export default component$(() => {
-
   const pokemonState = useContext(PokemonListContext);
-
-
 
   useTask$(async ({ track }) => {
     track(() => pokemonState.currentPage);
@@ -29,7 +24,7 @@ export default component$(() => {
 
   useOnDocument(
     "scroll",
-    $((event) => {
+    $(() => {
       if (pokemonState.isLoading) return;
       const maxScroll = document.body.scrollHeight;
       const currentScroll = window.scrollY + window.innerHeight;

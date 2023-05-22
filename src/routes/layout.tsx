@@ -1,11 +1,11 @@
-import { component$, Slot, useStyles$ } from "@builder.io/qwik";
+import { component$, Slot } from "@builder.io/qwik";
 import { routeLoader$ } from "@builder.io/qwik-city";
 import { PokemonProvider } from "~/context";
 
-import Header from "~/components/shared/navbar/navbar";
-import Footer from "~/components/shared/footer/footer";
+// import Header from "~/components/shared/navbar/navbar";
+// import Footer from "~/components/shared/footer/footer";
 
-import styles from "./styles.css?inline";
+// import styles from "./styles.css?inline";
 
 export const useServerTimeLoader = routeLoader$(() => {
   return {
@@ -14,15 +14,15 @@ export const useServerTimeLoader = routeLoader$(() => {
 });
 
 export default component$(() => {
-  useStyles$(styles);
+  // useStyles$(styles);
 
   return (
     <PokemonProvider>
-      <Header />
+      {/* <Header /> */}
       <main class="flex-1 flex flex-col">
         <Slot />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </PokemonProvider>
   );
 });
