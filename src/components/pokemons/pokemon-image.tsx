@@ -42,6 +42,8 @@ export const PokemonImage = component$((props: Props) => {
             true,
           "transform -scale-x-100": backImage,
         }}
+        width="auto"
+        height="auto"
         // src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemonId}.svg`}
         src={imageUrl.value}
         style={{ height: `${size}px` }}

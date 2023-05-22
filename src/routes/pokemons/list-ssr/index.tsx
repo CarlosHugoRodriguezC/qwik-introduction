@@ -4,15 +4,17 @@ import {
   useComputed$,
   useSignal,
   useStore,
+  useVisibleTask$,
 } from "@builder.io/qwik";
 import {
-  DocumentHead,
+  type DocumentHead,
   Link,
   routeLoader$,
   useLocation,
 } from "@builder.io/qwik-city";
 import { PokemonImage } from "~/components/pokemons/pokemon-image";
 import { Modal } from "~/components/shared";
+import { getFunFactAboutPokemon } from "~/helpers/get-openai-response";
 import { getSmallPokemons } from "~/helpers/get-pokemons";
 import type { SmallPokemon } from "~/interfaces";
 
@@ -31,8 +33,7 @@ export default component$(() => {
   const location = useLocation();
   const modalVisible = useSignal(false);
   const pokemonSelected = useStore<SmallPokemon>({ id: "", name: "" });
-
-  console.log(location.url.searchParams.get("offset"));
+  const chatGptPokemonFact = useSignal<string>("Asking to chatgpt");
 
   const currentOffset = useComputed$<number>(() => {
     const offset = location.url.searchParams.get("offset");
@@ -48,6 +49,19 @@ export default component$(() => {
 
   const closeModal = $(() => {
     modalVisible.value = false;
+  });
+  // TODO: Test async
+  useVisibleTask$(({ track }) => {
+    track(() => pokemonSelected.name);
+
+    chatGptPokemonFact.value = "Asking to chatgpt";
+
+    if (selectPokemon.name.length > 0) {
+      getFunFactAboutPokemon(pokemonSelected.name).then((response) => {
+        console.log(response);
+        chatGptPokemonFact.value = response;
+      });
+    }
   });
 
   return (
@@ -73,7 +87,7 @@ export default component$(() => {
           Next
         </Link>
       </div>
-      <div class="grid grid-cols-6 mt-5">
+      <div class="grid grid-cols-2 md:grid-cols-6 mt-5">
         {pokemonResponse.value.map((pokemon) => (
           <div
             key={pokemon.id}
@@ -94,7 +108,7 @@ export default component$(() => {
         <div q:slot="title">{pokemonSelected.name}</div>
         <div q:slot="content" class="flex flex-col justify-center items-center">
           <PokemonImage pokemonId={pokemonSelected.id} isVisible />
-          <span> Asking to chatgpt</span>
+          <span>{chatGptPokemonFact.value}</span>
         </div>
       </Modal>
     </>
