@@ -1,4 +1,4 @@
-import { PokemonListResponse, SmallPokemon } from "~/interfaces";
+import type { PokemonListResponse, SmallPokemon } from "~/interfaces";
 
 export const getSmallPokemons = async (
   offset: number = 0,

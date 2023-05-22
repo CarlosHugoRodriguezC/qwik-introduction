@@ -1,5 +1,4 @@
 import { $, useComputed$, useContext } from "@builder.io/qwik";
-import { useNavigate } from "@builder.io/qwik-city";
 import { PokemonGameContext } from "~/context";
 
 export const usePokemonGame = () => {

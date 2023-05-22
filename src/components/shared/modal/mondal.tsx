@@ -1,5 +1,5 @@
 import {
-  PropFunction,
+  type PropFunction,
   Slot,
   component$,
   useStylesScoped$,

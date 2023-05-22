@@ -35,21 +35,23 @@ export const PokemonImage = component$((props: Props) => {
     <div class="flex justify-center items-center py-10 h-52">
       {!imageLoaded.value && <span>Loading...</span>}
       <img
-        class={{
-          hidden: !imageLoaded.value,
-          "brightness-0": !isVisible,
-          "drop-shadow-pokeshadow transition-all duration-500 ease-in-out":
-            true,
-          "transform -scale-x-100": backImage,
-        }}
+        class={[
+          {
+            hidden: !imageLoaded.value,
+            "brightness-0": !isVisible,
+            "transform -scale-x-100": backImage,
+          },
+          "transition-all duration-1000 ease-in-out",
+        ]}
         width="100%"
         height="auto"
         // src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${pokemonId}.svg`}
         src={imageUrl.value}
         style={{ height: `${size}px` }}
-        onLoad$={(event) => {
-          console.log("onLoad", event);
+        onLoad$={() => {
+          // setTimeout(() => {
           imageLoaded.value = true;
+          // }, 2000);
         }}
         // onLoadedData$={() => {
         //   console.log("onLoadedData");

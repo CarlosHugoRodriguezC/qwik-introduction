@@ -1,7 +1,7 @@
-import { $, component$, useContext, useSignal } from "@builder.io/qwik";
-import { DocumentHead, Link, useNavigate } from "@builder.io/qwik-city";
+import { $, component$ } from "@builder.io/qwik";
+import { type DocumentHead, useNavigate } from "@builder.io/qwik-city";
 import { PokemonImage } from "~/components/pokemons/pokemon-image";
-import { PokemonGameContext } from "~/context";
+
 import { usePokemonGame } from "~/hooks/usePokemonGame";
 
 export default component$(() => {
